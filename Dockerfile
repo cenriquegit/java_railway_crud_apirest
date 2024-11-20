@@ -9,14 +9,12 @@ RUN mv -f target/*.jar app.jar
 
 FROM eclipse-temurin:21-jre
 
-ARG PORT
-ENV PORT=${PORT:-8080}
-
 COPY --from=build /app/app.jar .
 
 RUN useradd runtime
 USER runtime
 
-EXPOSE ${PORT}
+EXPOSE 8080
+
 
 ENTRYPOINT ["java", "-Dserver.port=${PORT}", "-jar", "app.jar"]
